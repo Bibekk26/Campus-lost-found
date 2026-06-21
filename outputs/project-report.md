@@ -92,7 +92,7 @@ Add screenshots after running the deployed website:
 | Problem | Solution |
 | --- | --- |
 | Users should only edit their own posts | Checked the logged-in user's email before edit, update, or delete |
-| Uploaded images need stable URLs | Saved image files in an upload directory and served them through `/uploads/**` |
+| Uploaded images need to stay available on Render free tier | Stored image data in PostgreSQL instead of using a paid persistent disk |
 | The app needs PostgreSQL on Render but easy local testing | Used H2 by default and PostgreSQL through environment variables |
 | Search should cover multiple fields | Used a JPA repository method to search title, category, location, and description |
 

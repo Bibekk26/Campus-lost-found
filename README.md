@@ -8,7 +8,7 @@ A Spring Boot final project web application where students can post lost or foun
 - PostgreSQL database support
 - JPA entities and repositories
 - CRUD for lost/found item posts
-- Image upload and display
+- Image upload and display, stored in the database for Render free tier
 - Keyword search across title, category, location, and description
 - Responsive Thymeleaf UI
 - Render-ready deployment files
@@ -44,7 +44,6 @@ DATABASE_USERNAME=postgres
 DATABASE_PASSWORD=your_password
 DATABASE_DRIVER=org.postgresql.Driver
 SPRING_PROFILES_ACTIVE=postgres
-UPLOAD_DIR=uploads
 ```
 
 ## Render Deployment
@@ -61,7 +60,6 @@ UPLOAD_DIR=uploads
    - `DATABASE_USERNAME`
    - `DATABASE_PASSWORD`
    - `DATABASE_DRIVER=org.postgresql.Driver`
-   - `UPLOAD_DIR=/var/data/uploads`
 
 ## Test Account
 

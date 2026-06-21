@@ -33,7 +33,7 @@
         <label>Image
             <input type="file" name="image" accept="image/png,image/jpeg,image/gif,image/webp">
         </label>
-        <img th:if="${item.imagePath}" class="preview" th:src="${item.imagePath}" th:alt="${item.title}">
+        <img th:if="${item.hasImage()}" class="preview" th:src="${item.imageSrc}" th:alt="${item.title}">
         <button class="primary-button" type="submit">Save</button>
     </form>
 </main>

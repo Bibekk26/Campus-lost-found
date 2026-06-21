@@ -4,7 +4,7 @@ import com.campus.lostfound.model.ItemStatus;
 import com.campus.lostfound.model.LostItem;
 import com.campus.lostfound.repository.LostItemRepository;
 import com.campus.lostfound.repository.UserRepository;
-import com.campus.lostfound.service.FileStorageService;
+import com.campus.lostfound.service.ImageStorageService;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
@@ -27,15 +27,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ItemController {
     private final LostItemRepository itemRepository;
     private final UserRepository userRepository;
-    private final FileStorageService fileStorageService;
+    private final ImageStorageService imageStorageService;
 
     public ItemController(
             LostItemRepository itemRepository,
             UserRepository userRepository,
-            FileStorageService fileStorageService) {
+            ImageStorageService imageStorageService) {
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
-        this.fileStorageService = fileStorageService;
+        this.imageStorageService = imageStorageService;
     }
 
     @GetMapping
@@ -84,7 +84,7 @@ public class ItemController {
         }
 
         item.setOwner(currentUser(principal));
-        item.setImagePath(fileStorageService.store(image));
+        imageStorageService.store(item, image);
         itemRepository.save(item);
         redirectAttributes.addFlashAttribute("success", "Item post created.");
         return "redirect:/items/" + item.getId();
@@ -110,7 +110,8 @@ public class ItemController {
         var item = requireOwnedItem(id, principal);
         if (result.hasErrors()) {
             form.setId(id);
-            form.setImagePath(item.getImagePath());
+            form.setImageContentType(item.getImageContentType());
+            form.setImageData(item.getImageData());
             model.addAttribute("statuses", ItemStatus.values());
             return "items/form";
         }
@@ -120,10 +121,7 @@ public class ItemController {
         item.setLocation(form.getLocation());
         item.setDescription(form.getDescription());
         item.setStatus(form.getStatus());
-        var newImagePath = fileStorageService.store(image);
-        if (newImagePath != null) {
-            item.setImagePath(newImagePath);
-        }
+        imageStorageService.store(item, image);
         itemRepository.save(item);
         redirectAttributes.addFlashAttribute("success", "Item post updated.");
         return "redirect:/items/" + item.getId();

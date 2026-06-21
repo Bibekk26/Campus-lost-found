@@ -43,7 +43,10 @@ public class LostItem {
     @Enumerated(EnumType.STRING)
     private ItemStatus status = ItemStatus.LOST;
 
-    private String imagePath;
+    private String imageContentType;
+
+    @Column(columnDefinition = "TEXT")
+    private String imageData;
 
     private LocalDateTime createdAt;
 
@@ -112,12 +115,31 @@ public class LostItem {
         this.status = status;
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public String getImageContentType() {
+        return imageContentType;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+    }
+
+    public String getImageData() {
+        return imageData;
+    }
+
+    public void setImageData(String imageData) {
+        this.imageData = imageData;
+    }
+
+    public boolean hasImage() {
+        return imageData != null && !imageData.isBlank();
+    }
+
+    public String getImageSrc() {
+        if (!hasImage()) {
+            return null;
+        }
+        return "data:" + imageContentType + ";base64," + imageData;
     }
 
     public LocalDateTime getCreatedAt() {

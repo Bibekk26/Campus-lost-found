@@ -7,8 +7,8 @@
     <div th:if="${success}" class="alert success" th:text="${success}"></div>
     <section class="detail-layout reveal">
         <div class="detail-image">
-            <img th:if="${item.imagePath}" th:src="${item.imagePath}" th:alt="${item.title}">
-            <div th:unless="${item.imagePath}" class="placeholder large">No image uploaded</div>
+            <img th:if="${item.hasImage()}" th:src="${item.imageSrc}" th:alt="${item.title}">
+            <div th:unless="${item.hasImage()}" class="placeholder large">No image uploaded</div>
         </div>
         <div class="detail-content">
             <div class="status-row">

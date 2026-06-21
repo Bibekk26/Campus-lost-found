@@ -55,8 +55,8 @@
     <section class="grid">
         <article class="item-card reveal" th:each="item : ${items}">
             <a th:href="@{/items/{id}(id=${item.id})}" class="image-wrap">
-                <img th:if="${item.imagePath}" th:src="${item.imagePath}" th:alt="${item.title}">
-                <div th:unless="${item.imagePath}" class="placeholder">Photo pending</div>
+                <img th:if="${item.hasImage()}" th:src="${item.imageSrc}" th:alt="${item.title}">
+                <div th:unless="${item.hasImage()}" class="placeholder">Photo pending</div>
             </a>
             <div class="card-body">
                 <div class="status-row">
