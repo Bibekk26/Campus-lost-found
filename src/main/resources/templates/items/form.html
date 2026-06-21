@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head(${item.id == null ? 'Post Item' : 'Edit Item'})}"></head>
+<body>
+<header th:replace="~{layout :: nav}"></header>
+<main class="container narrow">
+    <div class="page-heading">
+        <p class="eyebrow">Item report</p>
+        <h1 th:text="${item.id == null ? 'Post an Item' : 'Edit Item'}">Post an Item</h1>
+    </div>
+    <form class="form-panel reveal" th:action="${item.id == null} ? @{/items} : @{/items/{id}(id=${item.id})}" th:object="${item}" method="post" enctype="multipart/form-data">
+        <label>Title
+            <input th:field="*{title}" required maxlength="120">
+            <span class="error" th:errors="*{title}"></span>
+        </label>
+        <label>Category
+            <input th:field="*{category}" required maxlength="40" placeholder="Electronics, Books, Keys">
+            <span class="error" th:errors="*{category}"></span>
+        </label>
+        <label>Location
+            <input th:field="*{location}" required maxlength="120" placeholder="Library, cafeteria, room 204">
+            <span class="error" th:errors="*{location}"></span>
+        </label>
+        <label>Status
+            <select th:field="*{status}">
+                <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+            </select>
+        </label>
+        <label>Description
+            <textarea th:field="*{description}" required maxlength="1500" rows="6"></textarea>
+            <span class="error" th:errors="*{description}"></span>
+        </label>
+        <label>Image
+            <input type="file" name="image" accept="image/png,image/jpeg,image/gif,image/webp">
+        </label>
+        <img th:if="${item.imagePath}" class="preview" th:src="${item.imagePath}" th:alt="${item.title}">
+        <button class="primary-button" type="submit">Save</button>
+    </form>
+</main>
+</body>
+</html>

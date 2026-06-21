@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head(${item.title})}"></head>
+<body>
+<header th:replace="~{layout :: nav}"></header>
+<main class="container detail">
+    <div th:if="${success}" class="alert success" th:text="${success}"></div>
+    <section class="detail-layout reveal">
+        <div class="detail-image">
+            <img th:if="${item.imagePath}" th:src="${item.imagePath}" th:alt="${item.title}">
+            <div th:unless="${item.imagePath}" class="placeholder large">No image uploaded</div>
+        </div>
+        <div class="detail-content">
+            <div class="status-row">
+                <span th:class="${'status status-' + #strings.toLowerCase(item.status.name())}" th:text="${item.status}">LOST</span>
+                <span th:text="${item.category}">Category</span>
+            </div>
+            <h1 th:text="${item.title}">Item title</h1>
+            <p class="location" th:text="${item.location}">Location</p>
+            <p th:text="${item.description}">Description</p>
+            <div class="info-strip">
+                <span>Posted by <strong th:text="${item.owner.name}">Student</strong></span>
+                <span th:if="${item.createdAt != null}" th:text="${#temporals.format(item.createdAt, 'MMM d, yyyy')}">Jun 17, 2026</span>
+            </div>
+            <div th:if="${canEdit}" class="actions">
+                <a class="primary-button" th:href="@{/items/{id}/edit(id=${item.id})}">Edit</a>
+                <form th:action="@{/items/{id}/delete(id=${item.id})}" method="post">
+                    <button class="danger-button" type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

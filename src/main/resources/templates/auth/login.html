@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Login')}"></head>
+<body>
+<header th:replace="~{layout :: nav}"></header>
+<main class="container auth-page">
+    <div class="page-heading">
+        <p class="eyebrow">Welcome back</p>
+        <h1>Login</h1>
+    </div>
+    <div th:if="${param.error}" class="alert error">Invalid email or password.</div>
+    <div th:if="${success}" class="alert success" th:text="${success}"></div>
+    <form class="form-panel reveal" th:action="@{/login}" method="post">
+        <label>Email
+            <input type="email" name="email" required autocomplete="email">
+        </label>
+        <label>Password
+            <input type="password" name="password" required autocomplete="current-password">
+        </label>
+        <button class="primary-button" type="submit">Login</button>
+    </form>
+    <div class="auth-links">
+        <a th:href="@{/forgot-password}">Forgot password?</a>
+        <span>Need an account? <a th:href="@{/register}">Sign up</a></span>
+    </div>
+</main>
+</body>
+</html>

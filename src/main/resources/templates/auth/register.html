@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Sign Up')}"></head>
+<body>
+<header th:replace="~{layout :: nav}"></header>
+<main class="container auth-page">
+    <div class="page-heading">
+        <p class="eyebrow">Join the board</p>
+        <h1>Create Account</h1>
+    </div>
+    <form class="form-panel reveal" th:action="@{/register}" th:object="${user}" method="post">
+        <label>Name
+            <input th:field="*{name}" required maxlength="80">
+            <span class="error" th:errors="*{name}"></span>
+        </label>
+        <label>Email
+            <input th:field="*{email}" type="email" required>
+            <span class="error" th:errors="*{email}"></span>
+        </label>
+        <label>Password
+            <input th:field="*{password}" type="password" required minlength="6" autocomplete="new-password">
+            <span class="error" th:errors="*{password}"></span>
+        </label>
+        <button class="primary-button" type="submit">Sign Up</button>
+    </form>
+</main>
+</body>
+</html>
